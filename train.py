@@ -156,8 +156,7 @@ def trainer(args, epoch, model, ViT_model, train_loader, valid_loader, criterion
         if i % save_interval == 0:
             ckpt_path = os.path.join(path, f'checkpoint_{i}.pth')
             save_checkpoint(model, ViT_model, optimizer, epoch=i, path=ckpt_path)
-        
-        # 如果当前精度高于最高精度值，则保存当前checkpoint
+                
         if valid_accuracy > best_accuracy:
             best_accuracy = valid_accuracy
             best_ckpt_path = os.path.join(path, 'best_checkpoint.pth')

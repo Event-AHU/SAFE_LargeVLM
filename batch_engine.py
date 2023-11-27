@@ -27,8 +27,7 @@ def batch_trainer(epoch, model,ViT_model, train_loader, criterion, optimizer):
     print(f'learning rate whith VTB:{lr}')
     for step, (imgs, gt_label, imgname, label_v, event, gt_event_label, eventname) in enumerate(train_loader):
         for elem in imgname :
-            save_name.append(elem)#save_name长度=batchsize=32
-        for elem in eventname :
+            save_name.append(elem)
             save_event_name.append(elem)
         img_count+=imgs.shape[0]#32
         batch_time = time.time()
@@ -42,8 +41,7 @@ def batch_trainer(epoch, model,ViT_model, train_loader, criterion, optimizer):
         
         train_loss  = criterion(output, gt_label)
         print('==>> train_loss', train_loss)
-
-        #梯度裁剪
+        
         train_loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1)
         optimizer.step()
@@ -89,29 +87,15 @@ def valid_trainer(epoch,model,ViT_model, valid_loader, criterion):
             gt_list.append(gt_label.cpu().numpy())
             output = model(imgs, event,  ViT_model=ViT_model)
             breakpoint()            
-
-            # #可视化保存
-            #features.append(output.cpu().numpy())
             
-            #valid_loss = F.binary_cross_entropy_with_logits(output, gt_label) 
-            #breakpoint()
-
             valid_loss = criterion(output, gt_label) 
             #print('==>> valid_loss', valid_loss)
             # valid_probs = torch.sigmoid(output)
             preds_probs.append(output.cpu().numpy())
             loss_meter.update(to_scalar(valid_loss))
 
-    # #可视化保存
-    # features = np.concatenate(features)
-    # labels = np.concatenate(gt_list, axis=0)
-    # np.savetxt('mnist2500_X.txt', features)
-    # np.savetxt('mnist2500.txt', labels)
-
     valid_loss = loss_meter.avg
-    #breakpoint()
     
     gt_label = np.concatenate(gt_list, axis=0)
     preds_probs = np.concatenate(preds_probs, axis=0)
-    # return valid_loss, gt_label, preds_probs,save_name
     return valid_loss, gt_label, preds_probs
