@@ -85,9 +85,8 @@ class TransformerClassifier(nn.Module):
         self.tex_embed = nn.Parameter(torch.zeros(1, 1, dim))
         self.self_attention = SelfAttention(768) 
         # 实例化CrossAttention对象
-        self.cross_model = CrossAttention(in_dim=768, out_dim=768, in_q_dim=768, hid_q_dim=768)#除了第一个维度，其他自定
-        # self.cross_model.to(device)
-        
+        self.cross_model = CrossAttention(in_dim=768, out_dim=768, in_q_dim=768, hid_q_dim=768)
+               
         self.CLS_token = nn.Parameter(torch.zeros(1, 10, dim))
         self.fc1 = nn.Linear(768*10, self.attr_num)
         
@@ -108,17 +107,14 @@ class TransformerClassifier(nn.Module):
             img = img.unsqueeze(0)
             img = img.to(device)
             rgb_ViT_features.append(ViT_model.encode_image(img).squeeze(0))
-            #消融2（大模型换常规模型）
-            #rgb_ViT_features.append(self.vit(img).squeeze(0))
-            #breakpoint() 
-        rgb_ViT_image_features = torch.stack(rgb_ViT_features).to(device).float()#消融是[5, 197, 768],但clip是[5, 197, 512]
+            
+        rgb_ViT_image_features = torch.stack(rgb_ViT_features).to(device).float()
         
         for img in event_imgs:
             img = img.unsqueeze(0)
             img = img.to(device)
             event_ViT_features.append(ViT_model.encode_image(img).squeeze(0))
-            #消融2（大模型换常规模型）
-            #event_ViT_features.append(self.vit(img).squeeze(0)) 
+            
         event_ViT_image_features = torch.stack(event_ViT_features).to(device).float()
         #breakpoint()
         _, token_num, visual_dim = rgb_ViT_image_features.size()
@@ -128,71 +124,58 @@ class TransformerClassifier(nn.Module):
         rgb_ViT_image_features = self.visual_embed(torch.mean(rgb_ViT_image_features, dim=1)) 
         event_ViT_image_features = self.visual_embed(torch.mean(event_ViT_image_features, dim=1))
 
-        text_features = ViT_model.encode_text(self.text).to(device).float()#这里直接不concat text做消融
+        text_features = ViT_model.encode_text(self.text).to(device).float()
         textual_features = self.word_embed(text_features).expand(rgb_ViT_image_features.shape[0], text_features.shape[0], 768)  
         
-        tex_embed   = textual_features + self.tex_embed               #torch.Size([2, 300, 768])
-        rgb_embed   = rgb_ViT_image_features + self.rgb_embed       #torch.Size([2, 197, 768])
+        tex_embed   = textual_features + self.tex_embed              
+        rgb_embed   = rgb_ViT_image_features + self.rgb_embed       
         event_embed = event_ViT_image_features + self.event_embed
 
-        x = torch.cat([tex_embed, rgb_embed], dim=1) #torch.Size([2, 497, 768])
+        x = torch.cat([tex_embed, rgb_embed], dim=1) 
         x = torch.cat([x, event_embed], dim=1) 
-
-        #消融3，多模型融合不做，直接用concat，注释下面三行(Multi-modal Transformer)
+       
         for b_c, blk in enumerate(self.blocks):
             x = blk(x)
-        x = self.norm(x) #torch.Size([32, 694, 768])
-        
-        texttoken_features      = x[:, :self.attr_num, :]     #0到299    ([1, 114, 768])
-        rgb_imgtoken_features   = x[:, self.attr_num:self.attr_num+rgb_embed.shape[1], :]    #300+197 ([16, 197, 768])
-        event_imgtoken_features = x[:, self.attr_num+rgb_embed.shape[1]:, :] #498~694
+        x = self.norm(x) 
+        texttoken_features      = x[:, :self.attr_num, :]     
+        rgb_imgtoken_features   = x[:, self.attr_num:self.attr_num+rgb_embed.shape[1], :]    
+        event_imgtoken_features = x[:, self.attr_num+rgb_embed.shape[1]:, :] 
         
         ############################################################
         ## self-attention and cross-attention module 
         ############################################################
 
-        vis_event_tokens = torch.cat((rgb_imgtoken_features, event_imgtoken_features), dim=1)#([1, 394, 768])
-        #消融4(self attention)
-        vis_event_tokens = self.self_attention(vis_event_tokens)#([1, 394, 768])
-
-        enhanced_vis_tokens   = vis_event_tokens[:, :197, :] #[1, 197, 768]
-        enhanced_event_tokens = vis_event_tokens[:, 197:, :] #[1, 197, 768]
-        enhanced_features = enhanced_vis_tokens + enhanced_event_tokens 
-
-        #消融1(Semantic Attribute Set)
-        #texttoken_features = torch.zeros_like(texttoken_features)
+        vis_event_tokens = torch.cat((rgb_imgtoken_features, event_imgtoken_features), dim=1)
         
-        cross_output1 = self.cross_model(texttoken_features, enhanced_vis_tokens)  #[1, 114, 768]
-        cross_output2 = self.cross_model(texttoken_features, enhanced_event_tokens)#[1, 114, 768]
+        vis_event_tokens = self.self_attention(vis_event_tokens)
+
+        enhanced_vis_tokens   = vis_event_tokens[:, :197, :]
+        enhanced_event_tokens = vis_event_tokens[:, 197:, :]
+        enhanced_features = enhanced_vis_tokens + enhanced_event_tokens 
+             
+        cross_output1 = self.cross_model(texttoken_features, enhanced_vis_tokens)  
+        cross_output2 = self.cross_model(texttoken_features, enhanced_event_tokens)
         cross_features = cross_output1 + cross_output2
                         
-        visualTokens = torch.cat((enhanced_features, cross_features), dim=1) #[1, 311, 768]
+        visualTokens = torch.cat((enhanced_features, cross_features), dim=1) 
 
-        #消融5(cross attention)
-        #visualTokens = torch.cat((enhanced_features, texttoken_features), dim=1) #[1, 311, 768]
-        
-        # 获取visualTokens的实际数量
         actual_num = visualTokens.size(0)
 
         # 扩展self.CLS_token的第一维为实际数量
         expanded_CLS_token = self.CLS_token[:actual_num].expand(actual_num, -1, -1)
-        #breakpoint()
-        visualTokens = torch.cat((visualTokens, expanded_CLS_token), dim=1)  #([1, 321, 768])
+        
+        visualTokens = torch.cat((visualTokens, expanded_CLS_token), dim=1)  
                 
-        final_features =  self.self_attention(visualTokens) #([1, 321, 768])
-
-        #消融4
-        #final_features =  visualTokens 
+        final_features =  self.self_attention(visualTokens) 
+        
         l = final_features.shape[1]
         final_features_CLS = final_features[:, l-10:, :]
         
         output_feat = final_features_CLS.view(final_features_CLS.shape[0], -1)
-
         # 全连接层
         output_feat = self.fc1(output_feat)
         
         # softmax归一化
         logits = F.log_softmax(output_feat, dim=1) 
-        #breakpoint()
         return logits
 
