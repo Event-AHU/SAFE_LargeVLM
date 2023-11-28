@@ -1,6 +1,6 @@
 # SAFE_LargeVLM
 
-**emantic-Aware Frame-Event Fusion based Pattern Recognition via Large Vision-Language Models**, Xiao Wang, Dong Li, Jiandong Jin, Yuhao Zhang, Yanlin Zhong, Yaoyang Wu, Lan Chen. [[arXiv](https://arxiv.org/abs/2308.11937)] [[Paper_with_Code](https://paperswithcode.com/paper/learning-bottleneck-transformer-for-event#code)] [[Poster](https://github.com/Event-AHU/EFV_event_classification/blob/main/Poster_EFV_event_classification.pdf)] 
+**emantic-Aware Frame-Event Fusion based Pattern Recognition via Large Vision-Language Models**, Xiao Wang, Dong Li, Jiandong Jin, Yuhao Zhang, Yanlin Zhong, Yaoyang Wu, Lan Chen. [[arXiv](https:)] ] 
 
 
 ## :dart: Abstract 
@@ -8,7 +8,7 @@ Pattern recognition through the fusion of RGB frames and Event streams has emerg
 
 
 <p align="center">
-  <img width="90%" src="https://github.com/Event-AHU/EFV_event_classification/blob/main/figure/firstIMG.jpg" alt="feature_vis"/>
+  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/main/figures/firstIMG.jpg" alt="feature_vis"/>
 </p> 
 
 
@@ -29,7 +29,7 @@ sentence-transformers  2.2.2
 
 ## :triangular_flag_on_post: Framework 
 <p align="center">
-  <img width="90%" src="https://github.com/Event-AHU/EFV_event_classification/blob/main/figure/frameworkV4.jpg" alt="feature_vis"/>
+  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/main/figures/framework.jpg" alt="feature_vis"/>
 </p> 
 
 ## :floppy_disk: Dataset Download and Pre-processing 
@@ -58,7 +58,7 @@ DropBox (178GB): https://www.dropbox.com/scl/fo/w658kwhfi3qa8naul3eeb/h?rlkey=zj
 
 ## :chart_with_upwards_trend: Experimental Results 
 <p align="center">
-  <img width="90%" src="https://github.com/Event-AHU/EFV_event_classification/blob/main/figure/ASLtop5TSNE.jpg" alt="feature_vis"/>
+  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/main/figures/poker.jpg" alt="feature_vis"/>
 </p> 
 ## :newspaper:License
 
