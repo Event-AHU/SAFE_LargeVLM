@@ -67,7 +67,9 @@ Code is released for non-commercial and research purposes **only**. For commerci
 
 ## :newspaper:Acknowledgement
 
-Our code is implemented based on VTB,VTF
+Our code is implemented based on 
+<a href="https://github.com/cxh0519/VTB">VTB</a>, 
+<a href="https://github.com/Event-AHU/VTF_PAR">VTF</a>.
 
 ## :newspaper: Citation 
 
