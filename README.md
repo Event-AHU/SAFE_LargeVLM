@@ -58,7 +58,7 @@ DropBox (178GB): https://www.dropbox.com/scl/fo/w658kwhfi3qa8naul3eeb/h?rlkey=zj
 
 ## :chart_with_upwards_trend: Experimental Results 
 <p align="center">
-  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/main/figures/poker.jpg" alt="feature_vis"/>
+  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/main/figures/poker.png" alt="feature_vis"/>
 </p> 
 ## :newspaper:License
 
