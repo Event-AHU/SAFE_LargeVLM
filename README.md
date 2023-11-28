@@ -1,6 +1,6 @@
 # SAFE_LargeVLM
 
-**emantic-Aware Frame-Event Fusion based Pattern Recognition via Large Vision-Language Models**, Xiao Wang, Dong Li, Jiandong Jin, Yuhao Zhang, Yanlin Zhong, Yaoyang Wu, Lan Chen. [[arXiv](https:)] ] 
+**Semantic-Aware Frame-Event Fusion based Pattern Recognition via Large Vision-Language Models**, Xiao Wang, Dong Li, Jiandong Jin, Yuhao Zhang, Yanlin Zhong, Yaoyang Wu, Lan Chen. [[arXiv](https:)] ] 
 
 
 ## :dart: Abstract 
