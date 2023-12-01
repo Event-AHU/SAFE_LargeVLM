@@ -77,7 +77,14 @@ Our code is implemented based on
 
 If you think this work contributes to your research, please give us a star :star2: and cite this paper via: 
 ```
-@
+@misc{li2023SAFE,
+      title={Semantic-Aware Frame-Event Fusion based Pattern Recognition via Large Vision-Language Models}, 
+      author={Dong Li and Jiandong Jin and Yuhao Zhang and Yanlin Zhong and Yaoyang Wu and Lan Chen and Xiao Wang and Bin Luo},
+      year={2023},
+      eprint={2311.18592},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 ```
 
 If you have any questions about this work, please leave an issue. 
