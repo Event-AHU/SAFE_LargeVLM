@@ -30,12 +30,11 @@ from torch.utils.data.distributed import DistributedSampler
 def main(args):
     ViT_model, ViT_preprocess = clip.load("ViT-B/16", device=device,download_root='/media/amax/836e911f-c5c3-4c4b-91f2-41bb8f3f5cb6/DATA/lidong/VTF_PAR-main/model') 
     ViT_model = ViT_model.float()
-    # 将ViT_model移动到当前设备
     ViT_model = ViT_model.to(args.local_rank)
     
     # 初始化进程组
     dist.init_process_group(backend='nccl')
-    torch.cuda.set_device(args.local_rank)  # 设置当前设备
+    torch.cuda.set_device(args.local_rank)  
     log_dir = os.path.join('logs', args.dataset)
     tb_writer = SummaryWriter('/media/amax/836e911f-c5c3-4c4b-91f2-41bb8f3f5cb6/DATA/lidong/VTF_PAR-main/CaptionCLIP-ViT-B/tensorboardX/exp')
     if not os.path.exists(log_dir):
