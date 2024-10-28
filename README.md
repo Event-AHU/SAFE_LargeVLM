@@ -14,7 +14,7 @@ Pattern recognition through the fusion of RGB frames and Event streams has emerg
 
 
 <p align="center">
-  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/main/figures/firstIMG.jpg" alt="feature_vis"/>
+  <img width="90%" src="" alt="feature_vis"/>
 </p> 
 
 
