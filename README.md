@@ -52,6 +52,9 @@ BaiduYun (178GB): 链接：https://pan.baidu.com/s/1vQnHZUqQ1o58SajvtE-uHw?pwd=A
 
 DropBox (178GB): https://www.dropbox.com/scl/fo/w658kwhfi3qa8naul3eeb/h?rlkey=zjn4b69wa1e3mhid8p6hh8v75&dl=0
 ```
+### AFE representation 
+
+https://arxiv.org/abs/2403.12534
 
 ## :hourglass: Training and Testing 
 ```
