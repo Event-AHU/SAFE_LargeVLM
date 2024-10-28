@@ -14,7 +14,7 @@ Pattern recognition through the fusion of RGB frames and Event streams has emerg
 
 
 <p align="center">
-  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/main/figures/firstIMG.jpg" alt="feature_vis"/>
+  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/SAFE_v2/figures/firstIMG.jpg" alt="feature_vis"/>
 </p> 
 
 
@@ -35,7 +35,7 @@ sentence-transformers  2.2.2
 
 ## :triangular_flag_on_post: Framework 
 <p align="center">
-  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/main/figures/framework.jpg" alt="feature_vis"/>
+  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/SAFE_v2/figures/frameworkV3.jpg" alt="feature_vis"/>
 </p> 
 
 ## :floppy_disk: Dataset Download and Pre-processing 
@@ -52,6 +52,9 @@ BaiduYun (178GB): 链接：https://pan.baidu.com/s/1vQnHZUqQ1o58SajvtE-uHw?pwd=A
 
 DropBox (178GB): https://www.dropbox.com/scl/fo/w658kwhfi3qa8naul3eeb/h?rlkey=zjn4b69wa1e3mhid8p6hh8v75&dl=0
 ```
+### AFE representation 
+
+https://arxiv.org/abs/2403.12534
 
 ## :hourglass: Training and Testing 
 ```
