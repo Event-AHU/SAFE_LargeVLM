@@ -14,7 +14,7 @@ Pattern recognition through the fusion of RGB frames and Event streams has emerg
 
 
 <p align="center">
-  <img width="90%" src="" alt="feature_vis"/>
+  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/SAFE_v2/figures/firstIMG.jpg" alt="feature_vis"/>
 </p> 
 
 
@@ -35,7 +35,7 @@ sentence-transformers  2.2.2
 
 ## :triangular_flag_on_post: Framework 
 <p align="center">
-  <img width="90%" src="https://github.com/Event-AHU/SAFE_LargeVLM/blob/main/figures/framework.jpg" alt="feature_vis"/>
+  <img width="90%" src="" alt="feature_vis"/>
 </p> 
 
 ## :floppy_disk: Dataset Download and Pre-processing 
