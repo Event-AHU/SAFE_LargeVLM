@@ -56,6 +56,10 @@ DropBox (178GB): https://www.dropbox.com/scl/fo/w658kwhfi3qa8naul3eeb/h?rlkey=zj
 
 https://arxiv.org/abs/2403.12534
 
+### Checkpoint 
+
+https://pan.baidu.com/s/1RJBpXF60KAM-eTbd0VeJfw 提取码: wfmj
+
 ## :hourglass: Training and Testing 
 ```
     train
