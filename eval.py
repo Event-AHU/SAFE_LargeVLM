@@ -50,8 +50,6 @@ def main(args):
     model = torch.nn.parallel.DistributedDataParallel(model.cuda(), find_unused_parameters=True)
     
     checkpoint = torch.load('/media/amax/c08a625b-023d-436f-b33e-9652dc1bc7c0/DATA/lidong/VTF_PAR-main/logs11/poker/best_checkpoint.pth',map_location='cuda:0')
-    #可视化
-    #checkpoint = torch.load('/media/amax/836e911f-c5c3-4c4b-91f2-41bb8f3f5cb6/DATA/lidong/VTF_PAR-main/Visualization/VTF/best_checkpoint.pth',map_location='cuda:0')
     model.load_state_dict(checkpoint['model_state_dict'], strict=False)
     ViT_model.load_state_dict(checkpoint['ViT_model_state_dict'], strict=False)
 
