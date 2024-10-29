@@ -26,7 +26,7 @@ import torch.nn.parallel
 from torch.utils.data.distributed import DistributedSampler
 
 def main(args):
-    ViT_model, ViT_preprocess = clip.load("ViT-B/16", device=device,download_root='/media/amax/836e911f-c5c3-4c4b-91f2-41bb8f3f5cb6/DATA/lidong/VTF_PAR-main/model') 
+    ViT_model, ViT_preprocess = clip.load("ViT-B/16", device=device,download_root='/media/amax/c08a625b-023d-436f-b33e-9652dc1bc7c0/DATA/lidong/VTF_PAR-main/model') 
     ViT_model = ViT_model.float()
     ViT_model = ViT_model.to(args.local_rank)
     dist.init_process_group(backend='nccl')
@@ -46,11 +46,12 @@ def main(args):
         sampler=valid_sampler
     )
 
-    model = TransformerClassifier(valid_set.attr_num, attr_words=valid_set.attributes)
+    model = TransformerClassifier(args,valid_set.attr_num, attr_words=valid_set.attributes)
     model = torch.nn.parallel.DistributedDataParallel(model.cuda(), find_unused_parameters=True)
     
-    checkpoint = torch.load('/media/amax/836e911f-c5c3-4c4b-91f2-41bb8f3f5cb6/DATA/lidong/VTF_PAR-main/logs/poker/best_checkpoint.pth',map_location='cuda:0')
-    
+    checkpoint = torch.load('/media/amax/c08a625b-023d-436f-b33e-9652dc1bc7c0/DATA/lidong/VTF_PAR-main/logs11/poker/best_checkpoint.pth',map_location='cuda:0')
+    #可视化
+    #checkpoint = torch.load('/media/amax/836e911f-c5c3-4c4b-91f2-41bb8f3f5cb6/DATA/lidong/VTF_PAR-main/Visualization/VTF/best_checkpoint.pth',map_location='cuda:0')
     model.load_state_dict(checkpoint['model_state_dict'], strict=False)
     ViT_model.load_state_dict(checkpoint['ViT_model_state_dict'], strict=False)
 
@@ -64,12 +65,12 @@ def main(args):
         criterion=criterion,
     )
 
-    if args.dataset == 'poker':
-        valid_preds = valid_probs.argmax(axis=1)
-        valid_gt = valid_gt.argmax(axis=1)
-        valid_correct_predictions = (valid_preds == valid_gt).sum()
-        valid_accuracy = valid_correct_predictions / len(valid_gt)
-        print('===>>valid_accuracy = ', valid_accuracy)
+    
+    valid_preds = valid_probs.argmax(axis=1)
+    valid_gt = valid_gt.argmax(axis=1)
+    valid_correct_predictions = (valid_preds == valid_gt).sum()
+    valid_accuracy = valid_correct_predictions / len(valid_gt)
+    print('===>>valid_accuracy = ', valid_accuracy)
 
     print('===>>Testing Complete...')
 
