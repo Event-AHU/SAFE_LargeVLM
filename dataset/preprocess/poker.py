@@ -199,14 +199,14 @@ def generate_data_description(save_dir):
     dataset.attr_vectors = get_label_embeds(attr_words)
     
     dataset.label = np.concatenate((np.array(trainval_gt_list),np.array(test_gt_list)), axis=0)  #将数组合在一起变成一个总的数组，加了一层[]
-    #assert dataset.label.shape == (64522+32386, 300)
+    #assert dataset.label.shape == (60001+36907, 300)
     assert dataset.label.shape == (16216+8199, 114)
 
     dataset.partition = EasyDict()
     dataset.attr_name = attr_words
-    #dataset.partition.test = np.arange(64522, 64522+32386)  
+    #hardvs dataset.partition.test = np.arange(60001, 60001+36907)  
     dataset.partition.test = np.arange(16216, 16216+8199)
-    #dataset.partition.trainval = np.arange(0, 64522)  
+    #dataset.partition.trainval = np.arange(0, 60001)  
     dataset.partition.trainval = np.arange(0, 16216)
     #dataset.weight_trainval = np.mean(dataset.label[dataset.partition.trainval], axis=0).astype(np.float32)   
     # 包含每个tracklet中图片的地址
